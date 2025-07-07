@@ -56,4 +56,4 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # add package-lock.json to ignore if you are using yarn or pnpm
-package-lock.json
+/package-lock.json
