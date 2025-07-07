@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TodosModule } from './todos/todos.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
@@ -12,7 +11,7 @@ import { RolesGuard } from './auth/guards/role.guard';
     isGlobal: true,
   }), MongooseModule.forRoot(process.env.DB_URI, {
     dbName: process.env.DB_NAME,
-  }), TodosModule, AuthModule, UserModule],
+  }), AuthModule, UserModule],
   controllers: [],
   providers: [],
 })
