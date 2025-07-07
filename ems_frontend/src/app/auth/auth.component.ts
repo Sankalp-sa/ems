@@ -1,0 +1,42 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-auth',
+  templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.scss']
+})
+export class AuthComponent implements OnInit {
+
+  loginForm !: FormGroup;
+
+  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router) { }
+
+  ngOnInit(): void {
+
+    this.loginForm = this.fb.group({
+      userName: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  login(){
+    if (this.loginForm.valid) {
+      const { userName, password } = this.loginForm.value;
+      this.authService.login(userName, password).subscribe({
+        next: (response) => {
+          this.authService.isLoggedIn = true; // Set login status
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+          // Handle login error, e.g., show an error message
+        }
+      });
+    } else {
+      console.error('Form is invalid');
+    }
+  }
+
+}
