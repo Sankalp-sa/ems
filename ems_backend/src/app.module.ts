@@ -5,13 +5,14 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/role.guard';
+import { LeaveModule } from './leave/leave.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
   }), MongooseModule.forRoot(process.env.DB_URI, {
     dbName: process.env.DB_NAME,
-  }), AuthModule, UserModule],
+  }), AuthModule, UserModule, LeaveModule],
   controllers: [],
   providers: [],
 })
