@@ -15,7 +15,6 @@ export class AuthService {
 
   constructor(@Inject(APP_SERVICE_CONFIG) private config: AppConfig,
     private http: HttpClient) {
-
       this.baseUrl = this.config.apiEndpoint; // Assuming apiEndpoint is defined in your config
   }
 
