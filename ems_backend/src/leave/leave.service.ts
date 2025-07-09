@@ -21,16 +21,20 @@ export class LeaveService {
   }
 
   
-  async findLeave(UserId: string) {
-    return 
+  async findLeaves(UserId: string) {
+
+    console.log(UserId);
+    return await this.leaveModel.find( {userId:UserId});
   }
 
   async updateLeave(UserId: string, updateLeaveDto: UpdateLeaveDto) {
+
+    return this.leaveModel.findOneAndUpdate({userId:UserId},updateLeaveDto)
     
   }
 
   async removeLeave(UserId: string) {
-    return 
+    return this.leaveModel.findOneAndDelete({userId:UserId})
   }
 
 }

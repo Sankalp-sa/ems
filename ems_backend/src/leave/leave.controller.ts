@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UsePipes, ValidationPipe } from '@nestjs/common';
 import { LeaveService } from './leave.service';
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
@@ -8,37 +8,40 @@ import { RolesGuard } from 'src/auth/guards/role.guard';
 import { JwtGuard } from 'src/auth/guards/jwt.guard';
 import {Request} from 'express'
 
+@Roles(Role.Admin,Role.User,Role.Manager)
+@UseGuards(RolesGuard)
+@UseGuards(JwtGuard)
+@UsePipes(new ValidationPipe())
 @Controller('leave')
 export class LeaveController {
   constructor(private readonly leaveService: LeaveService) {}
 
   @Post()
-  @Roles(Role.Admin,Role.User)
-  @UseGuards(RolesGuard)
-  @UseGuards(JwtGuard)
-  create(@Body() createLeaveDto: CreateLeaveDto,@Req() req: Request) {
+  async create(@Body() createLeaveDto: CreateLeaveDto,@Req() req: Request) {
 
     
     return this.leaveService.createLeave(createLeaveDto, req.user['id'] );
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.leaveService.findAll();
-  // }
+  
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.leaveService.findOne(+id);
-  // }
+  @Get('myleave')
+  findLeaves(@Req() req: Request) {
+    return this.leaveService.findLeaves(req.user['id']);
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateLeaveDto: UpdateLeaveDto) {
-  //   return this.leaveService.update(+id, updateLeaveDto);
-  // }
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.leaveService.remove(+id);
-  // }
+
+  @Patch('update')
+  async updateLeave(@Req() req: Request,@Body() updateLeaveDto: UpdateLeaveDto) {
+
+    return await this.leaveService.updateLeave( req.user['id'], updateLeaveDto);
+  }
+
+
+  
+  @Delete('delete')
+  async remove(@Req() req: Request) {
+    return await this.leaveService.removeLeave(req.user['id']);
+  }
 }
