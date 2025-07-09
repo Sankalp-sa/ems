@@ -15,9 +15,13 @@ export class RegisterService {
     this.baseUrl = this.config.apiEndpoint; 
   }
 
-  register(userName: string, email: string, password: string) {
-    const registerData = { username: userName, email, password };
+  register(userName: string, email: string, password: string, role: string, manager: string) {
+    const registerData = { username: userName, email, password, role, manager };
     return this.http.post(`${this.baseUrl}/user/register`, registerData);
+  }
+
+  getManagers() {
+    return this.http.get(`${this.baseUrl}/user/managers`);
   }
 
 }

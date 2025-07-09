@@ -22,6 +22,25 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill" class="w-100 mb-3">
+            <mat-label>Select Role</mat-label>
+            <mat-select formControlName="role">
+                <mat-option *ngFor="let role of roles" [value]="role.value">
+                    {{role.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mb-3">
+            <mat-label>Select Manager</mat-label>
+            <mat-select formControlName="manager">
+                <mat-option *ngFor="let manager of managerList" [value]="manager._id">
+                    {{manager.username}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="RegisterForm.get('manager')?.hasError('required')">
+                Manager is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-100 mb-3">
             <mat-label>Password</mat-label>
             <input matInput formControlName="password" type="password">
             <mat-error *ngIf="RegisterForm.get('password')?.hasError('required')">
