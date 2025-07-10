@@ -3,6 +3,7 @@ import { LeaveService } from './leave.service';
 import { LeaveController } from './leave.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Leave, LeaveSchema } from 'src/schemas/Leave.schema';
+import { User,userSchema } from 'src/schemas/User.schema';
 
 @Module({
   imports: [
@@ -11,6 +12,10 @@ import { Leave, LeaveSchema } from 'src/schemas/Leave.schema';
         {
           name: Leave.name,
           schema: LeaveSchema
+        },
+        {
+          name: User.name,
+          schema: userSchema
         }
       ]
     )
