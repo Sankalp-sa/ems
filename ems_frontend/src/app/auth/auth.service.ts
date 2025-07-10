@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { APP_SERVICE_CONFIG } from '../AppConfig/appconfig.service';
 import { AppConfig } from '../AppConfig/appconfig.interface';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { User } from './auth.user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +10,8 @@ import { throwError } from 'rxjs';
 export class AuthService {
 
   baseUrl !: string;
-  isLoggedIn = false;
+  isLoggedIn!: boolean;
+  userDetails!: User | null; 
 
   constructor(@Inject(APP_SERVICE_CONFIG) private config: AppConfig,
     private http: HttpClient) {
@@ -21,5 +21,13 @@ export class AuthService {
   login(userName: string, password: string) {
     const loginData = { username: userName, password };
     return this.http.post(`${this.baseUrl}/auth/login`, loginData);
+  }
+
+  getUserDetails() {
+    return this.http.get(`${this.baseUrl}/auth/status`);
+  }
+
+  logout() {
+    return this.http.post(`${this.baseUrl}/auth/logout`, {});
   }
 }

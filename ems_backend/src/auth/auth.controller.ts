@@ -27,11 +27,18 @@ export class AuthController {
   }
 
   @Get('status')
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.Manager, Role.User)
   @UseGuards(RolesGuard)
   @UseGuards(JwtGuard)
   status(@Req() req: Request) {
     return req.user
+  }
+
+  @Post('logout')
+  @UseGuards(JwtGuard)
+  logout(@Res({passthrough: true}) res: Response) {
+    res.clearCookie('user_token');
+    return { message: 'Logged out successfully' };
   }
 
 }

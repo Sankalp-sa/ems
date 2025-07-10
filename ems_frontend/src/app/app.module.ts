@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,13 +20,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
 import {MatSelectModule} from '@angular/material/select';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { InitService } from './init.service';
+
+function initFactory(initService: InitService) {
+  return () => initService.init();
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     AuthComponent,
-    RegisterComponent
+    RegisterComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +54,13 @@ import {MatSelectModule} from '@angular/material/select';
   ],
   providers: [
     { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initFactory,
+      deps: [InitService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
