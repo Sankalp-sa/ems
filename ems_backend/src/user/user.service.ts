@@ -10,12 +10,17 @@ export class UserService {
     constructor(@InjectModel(User.name) private userModel: Model<User>) {}
 
     async registerUser(createUserDto: CreatUserDto) {
+        console.log("Registering user with data:", createUserDto);
         const newUser = new this.userModel(createUserDto);
         return await newUser.save();
     }
 
     async findUserByUsername(username: string) {
-        return await this.userModel.findOne({ username });
+        return await this.userModel.findOne({ username }).populate('manager');
+    }
+
+    async findManagers() {
+        return await this.userModel.find({ role: 'manager' });
     }
     
 }

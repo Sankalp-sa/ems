@@ -16,7 +16,7 @@ export class User {
     @Prop({default: 'User'})
     role: string;
 
-    @Prop({ type: Types.ObjectId, ref: 'Employee' })
+    @Prop({ type: Types.ObjectId, ref: 'User' })
     manager: Types.ObjectId;
 } 
 
