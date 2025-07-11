@@ -19,4 +19,8 @@ export class CreatUserDto {
     @IsString()
     role: string;
 
+    @IsOptional()
+    @IsString()
+    managerId: string;
+
 }
