@@ -45,12 +45,15 @@ export class LeaveController {
     return await this.leaveService.removeLeave(req.user['id']);
   }
 
+  @Roles(Role.Admin,Role.Manager)
   @Get('employeeLeaves')
   async getEmployeeLeaves(@Req() req: Request)
   {
     return await this.leaveService.getEmployeeLeaves(req.user['id']);
   }
 
+
+  @Roles(Role.Admin,Role.Manager)
   @Patch('manageLeave')
   async updateLeaveStatus( @Req() req: Request,
     @Body('status') status: 'approved' | 'rejected',)
