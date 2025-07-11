@@ -22,6 +22,7 @@ import { RegisterComponent } from './register/register.component';
 import {MatSelectModule} from '@angular/material/select';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InitService } from './init.service';
+import { LeaveComponent } from './leave/leave.component';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -33,7 +34,8 @@ function initFactory(initService: InitService) {
     NavbarComponent,
     AuthComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    LeaveComponent
   ],
   imports: [
     BrowserModule,
