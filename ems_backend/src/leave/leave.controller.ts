@@ -44,4 +44,20 @@ export class LeaveController {
   async remove(@Req() req: Request) {
     return await this.leaveService.removeLeave(req.user['id']);
   }
+
+  @Get('employeeLeaves')
+  async getEmployeeLeaves(@Req() req: Request)
+  {
+    return await this.leaveService.getEmployeeLeaves(req.user['id']);
+  }
+
+  @Patch('manageLeave')
+  async updateLeaveStatus( @Req() req: Request,
+    @Body('status') status: 'approved' | 'rejected',)
+  {
+    const leaveId = req.body.leaveId;
+    console.log(leaveId)
+    return await this.leaveService.updateLeaveStatus(leaveId, status)
+  }
+
 }
