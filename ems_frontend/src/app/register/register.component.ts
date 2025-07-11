@@ -17,8 +17,7 @@ export class RegisterComponent implements OnInit {
 
   roles = [
     { value: 'user', viewValue: 'User' },
-    { value: 'manager', viewValue: 'Manager' },
-    { value: 'admin', viewValue: 'Admin' }
+    { value: 'manager', viewValue: 'Manager' }
   ];
 
   constructor(private fb: FormBuilder, private registerService: RegisterService) { }
@@ -45,7 +44,14 @@ export class RegisterComponent implements OnInit {
     if (this.RegisterForm.valid) {
 
       const { userName, email, password, role, manager } = this.RegisterForm.value;
-      this.registerService.register(userName, email, password, role, manager).subscribe({
+
+      let varManager = manager;
+
+      if(role === 'manager') {
+        varManager = null; // Managers do not have a manager
+      }
+
+      this.registerService.register(userName, email, password, role, varManager).subscribe({
         next: (response) => {
           console.log('Registration successful', response);
           // Handle successful registration, e.g., navigate to login page or show a success message

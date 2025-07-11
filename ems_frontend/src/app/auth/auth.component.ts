@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { User } from './auth.user.interface';
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +28,20 @@ export class AuthComponent implements OnInit {
       const { userName, password } = this.loginForm.value;
       this.authService.login(userName, password).subscribe({
         next: (response) => {
-          this.authService.isLoggedIn = true; // Set login status
+
+          this.authService.getUserDetails().subscribe({
+            next: (userDetails) => {
+              console.log('User details fetched successfully', userDetails);
+              this.authService.isLoggedIn = true; // Set login status
+              this.authService.userDetails = userDetails as User; // Assuming User is a defined interface for user details
+              this.route.navigate(['/dashboard']); // Navigate to dashboard or home page
+            },
+            error: (error) => {
+              console.error('Error fetching user details', error);
+              // Handle error, e.g., show an error message
+            }
+          });
+
         },
         error: (error) => {
           console.error('Login failed', error);
