@@ -19,10 +19,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InitService } from './init.service';
 import { LeaveComponent } from './leave/leave.component';
+import { MyLeavesComponent } from './my-leaves/my-leaves.component';
+import { MatCardModule } from '@angular/material/card';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -35,7 +37,8 @@ function initFactory(initService: InitService) {
     AuthComponent,
     RegisterComponent,
     DashboardComponent,
-    LeaveComponent
+    LeaveComponent,
+    MyLeavesComponent
   ],
   imports: [
     BrowserModule,
@@ -52,17 +55,18 @@ function initFactory(initService: InitService) {
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule,
   ],
   providers: [
-    { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
       useFactory: initFactory,
       deps: [InitService],
       multi: true
-    }
+    },
+    { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

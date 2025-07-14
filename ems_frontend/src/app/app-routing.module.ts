@@ -4,11 +4,14 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MyLeavesComponent } from './my-leaves/my-leaves.component';
+import { NoAuthGuard } from './guards/no-auth.guard';
 
 const routes: Routes = [
-  { path: 'register', component: RegisterComponent},
-  { path: 'login', component: AuthComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, // Assuming AuthComponent is the dashboard
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
+  { path: 'login', component: AuthComponent, canActivate: [NoAuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'myleaves', component: MyLeavesComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
