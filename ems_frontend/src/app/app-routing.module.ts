@@ -4,11 +4,13 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthGuard } from './guards/auth.guard';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { LeaveComponent } from './leave/leave.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'login', component: AuthComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] }, // Assuming AuthComponent is the dashboard
+  { path: 'applyLeave', component: LeaveComponent, canActivate: [AuthGuard]  }
 ];
 
 @NgModule({
