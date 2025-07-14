@@ -19,14 +19,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { RegisterComponent } from './register/register.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { InitService } from './init.service';
 import { LeaveComponent } from './leave/leave.component';
+<<<<<<< HEAD
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
 
+=======
+import { MyLeavesComponent } from './my-leaves/my-leaves.component';
+import { MatCardModule } from '@angular/material/card';
+>>>>>>> 78c79354c047761c5f825fb51ea71f7e2bd79e23
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -39,7 +44,8 @@ function initFactory(initService: InitService) {
     AuthComponent,
     RegisterComponent,
     DashboardComponent,
-    LeaveComponent
+    LeaveComponent,
+    MyLeavesComponent
   ],
   imports: [
     BrowserModule,
@@ -57,21 +63,28 @@ function initFactory(initService: InitService) {
     ReactiveFormsModule,
     MatButtonModule,
     MatSelectModule,
+<<<<<<< HEAD
     MatDatepickerModule,
     MatNativeDateModule,
     
     
+=======
+    MatCardModule,
+>>>>>>> 78c79354c047761c5f825fb51ea71f7e2bd79e23
   ],
   providers: [
-    { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     {
       provide: APP_INITIALIZER,
       useFactory: initFactory,
       deps: [InitService],
       multi: true
     },
+<<<<<<< HEAD
     
+=======
+    { provide: APP_SERVICE_CONFIG, useValue: APP_CONFIG },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+>>>>>>> 78c79354c047761c5f825fb51ea71f7e2bd79e23
   ],
   bootstrap: [AppComponent]
 })

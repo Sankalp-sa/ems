@@ -28,6 +28,12 @@ export class AuthService {
   }
 
   logout() {
+    this.isLoggedIn = false; // Reset login status
+    this.userDetails = null; // Clear user details
     return this.http.post(`${this.baseUrl}/auth/logout`, {});
+  }
+
+  getIsLoggedIn() {
+    return this.isLoggedIn;
   }
 }
