@@ -1,0 +1,26 @@
+<!-- <p> My Leaves </p> -->
+
+<div class="container-fluid row" style="padding: 2% 2%;">
+    <div *ngFor="let leave of leaves" class="col-3">
+        <mat-card class="mb-4">
+            <mat-card-header>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{ leave.reason }}
+                </p>
+                <p>
+                    {{ leave.startDate | date }} - {{ leave.endDate | date }}
+                </p>
+                <p>
+                    {{ leave.status }}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" [routerLink]="['/update', leave._id]">Edit</button>
+                <button mat-raised-button color="primary" [routerLink]="['/details', leave._id]">View Details</button>
+                <!-- <button mat-raised-button color="danger" (click)="openDialog(todo._id)">Delete</button> -->
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
