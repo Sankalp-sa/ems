@@ -11,11 +11,11 @@ export class AuthService {
 
   baseUrl !: string;
   isLoggedIn!: boolean;
-  userDetails!: User | null; 
+  userDetails!: User | null;
 
   constructor(@Inject(APP_SERVICE_CONFIG) private config: AppConfig,
     private http: HttpClient) {
-      this.baseUrl = this.config.apiEndpoint; // Assuming apiEndpoint is defined in your config
+    this.baseUrl = this.config.apiEndpoint; // Assuming apiEndpoint is defined in your config
   }
 
   login(userName: string, password: string) {
@@ -36,4 +36,14 @@ export class AuthService {
   getIsLoggedIn() {
     return this.isLoggedIn;
   }
+
+  hasRole(role: string): boolean {
+    return this.userDetails?.role === role;
+  }
+
+  hasAnyRole(roles: string[]): boolean {
+    return roles.includes(this.userDetails?.role || '');
+  }
+
+
 }
