@@ -41,4 +41,8 @@ export class NavbarComponent {
     });
   }
 
+  hasAnyRole(roles: string[]): boolean {
+    return this.authService.hasAnyRole(roles);
+  }
+
 }
