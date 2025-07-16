@@ -14,6 +14,10 @@
                         <input matInput [matDatepicker]="startpicker" formControlName="startDate">
                         <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
                         <mat-datepicker #startpicker></mat-datepicker>
+
+                        <mat-error *ngIf="leaveForm.get('startDate')?.hasError('required')">
+                            Start Date is required
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill">
@@ -21,11 +25,23 @@
                         <input matInput [matDatepicker]="endpicker" formControlName="endDate">
                         <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                         <mat-datepicker #endpicker></mat-datepicker>
+
+                         <mat-error *ngIf="leaveForm.get('endDate')?.hasError('dateRangeInvalid')">
+                            End Date should be greater than or equal to start date.
+                        </mat-error>
+
+                        <mat-error *ngIf="leaveForm.get('endDate')?.hasError('required')">
+                            End Date is required.
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field appearance="fill" style="flex: 1 1 100%;">
                         <mat-label>Reason</mat-label>
                         <input matInput formControlName="reason">
+
+                        <mat-error *ngIf="leaveForm.get('reason')?.hasError('required')">
+                             Reason is required
+                        </mat-error>
                     </mat-form-field>
 
             </div>

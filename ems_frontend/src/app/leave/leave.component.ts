@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { LeaveService } from './leave.service';
+import { CustomValidators } from './validators/leave.validations'
 
 
 @Component({
@@ -21,7 +22,8 @@ export class LeaveComponent implements OnInit {
         startDate: ['',Validators.required],
         endDate: ['',Validators.required],
         reason: ['',Validators.required]
-      }
+      },
+      {validators : CustomValidators.dateRangeValidator}
     )
     
   }
