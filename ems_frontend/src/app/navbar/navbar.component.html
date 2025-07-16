@@ -8,12 +8,8 @@
       <a *ngIf="!isLoggedIn()" mat-list-item [routerLink]="'login'">Login</a>
       <a *ngIf="!isLoggedIn()" mat-list-item [routerLink]="'register'">Register</a>
       <a *ngIf="isLoggedIn()" mat-list-item [routerLink]="'dashboard'">Dashboard</a>
-<<<<<<< HEAD
-      <a *ngIf="isLoggedIn()" mat-list-item [routerLink]="'applyLeave'">Apply Leave</a>
-
-=======
+      <a *ngIf="isLoggedIn()" mat-list-item [routerLink]="'applyLeave'">Apply Leave</a>    
       <a *ngIf="isLoggedIn()" mat-list-item [routerLink]="'myleaves'">My Leaves</a>
->>>>>>> 78c79354c047761c5f825fb51ea71f7e2bd79e23
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

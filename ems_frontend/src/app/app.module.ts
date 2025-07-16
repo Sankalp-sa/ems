@@ -29,6 +29,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { MyLeavesComponent } from './my-leaves/my-leaves.component';
 import { MatCardModule } from '@angular/material/card';
+import { EditLeaveComponent } from './edit-leave/edit-leave.component';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -42,7 +43,8 @@ function initFactory(initService: InitService) {
     RegisterComponent,
     DashboardComponent,
     LeaveComponent,
-    MyLeavesComponent
+    MyLeavesComponent,
+    EditLeaveComponent
   ],
   imports: [
     BrowserModule,
