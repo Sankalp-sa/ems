@@ -29,9 +29,9 @@ export class LeaveService {
     return await this.leaveModel.find( {userId:UserId});
   }
 
-  async updateLeave(UserId: string, updateLeaveDto: UpdateLeaveDto) {
+  async updateLeave(leaveId: string, updateLeaveDto: UpdateLeaveDto) {
 
-    return this.leaveModel.findOneAndUpdate({userId:UserId},updateLeaveDto)
+    return this.leaveModel.findOneAndUpdate({_id:leaveId},updateLeaveDto,{ new: true })
     
   }
 
@@ -55,6 +55,12 @@ export class LeaveService {
 
   }
 
+  async getLeaveById(LeaveId:string)
+
+  {
+    const leave = await this.leaveModel.findById(LeaveId);
+    return leave;
+  }
 
 
 }

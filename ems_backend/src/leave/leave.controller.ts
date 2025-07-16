@@ -32,10 +32,10 @@ export class LeaveController {
   }
 
 
-  @Patch('update')
-  async updateLeave(@Req() req: Request,@Body() updateLeaveDto: UpdateLeaveDto) {
+  @Patch('update/:id')
+  async updateLeave(@Param('id') leaveId:string ,@Body() updateLeaveDto: UpdateLeaveDto) {
 
-    return await this.leaveService.updateLeave( req.user['id'], updateLeaveDto);
+    return await this.leaveService.updateLeave( leaveId, updateLeaveDto);
   }
 
 
@@ -61,6 +61,12 @@ export class LeaveController {
     const leaveId = req.body.leaveId;
     console.log(leaveId)
     return await this.leaveService.updateLeaveStatus(leaveId, status)
+  }
+
+  @Get(':id')
+  async getLeaveById(@Param('id') id:string)
+  {
+    return this.leaveService.getLeaveById(id)
   }
 
 }

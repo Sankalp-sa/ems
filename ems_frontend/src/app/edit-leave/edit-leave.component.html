@@ -1,0 +1,40 @@
+<div class="leave-form-container" style="padding: 5% 20%;">
+    
+    <h2>Edit Leave</h2>
+
+    <form [formGroup]= "editleaveForm" (ngSubmit)= "updateLeave()">
+
+
+                    
+
+
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="startpicker" formControlName="startDate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="endpicker" formControlName="endDate">
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" style="flex: 1 1 100%;">
+                        <mat-label>Reason</mat-label>
+                        <input matInput formControlName="reason">
+                    </mat-form-field>
+
+            </div>
+
+             <div>
+                <button type="submit" mat-raised-button color="primary" class="me-3"> Submit </button>
+            </div>
+
+
+
+    </form>
+</div>
