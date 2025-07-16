@@ -45,7 +45,7 @@ function initFactory(initService: InitService) {
     DashboardComponent,
     LeaveComponent,
     MyLeavesComponent,
-    EditLeaveComponent
+    EditLeaveComponent,
     ManagerLeavesComponent
   ],
   imports: [

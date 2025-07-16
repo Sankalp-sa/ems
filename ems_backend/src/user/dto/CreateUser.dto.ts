@@ -15,6 +15,7 @@ export class CreatUserDto {
     @MinLength(6)
     password: string;
 
+    
     @IsOptional()
     @IsString()
     role: string;
@@ -22,5 +23,6 @@ export class CreatUserDto {
     @IsOptional()
     @IsString()
     managerId: string;
+
 
 }
