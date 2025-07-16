@@ -1,3 +1,28 @@
-<p>dashboard works!</p>
+<div class="container mt-4">
+  <h2>User Dashboard</h2>
 
-{{ userDetails | json }}
+  <div class="card mb-4">
+    <div class="card-header text-white" style="background-color: #673ab7;">
+      User Details
+    </div>
+    <div class="card-body" *ngIf="userDetails">
+      <p><strong>Username:</strong> {{ userDetails.username }}</p>
+      <p><strong>Email:</strong> {{ userDetails.email }}</p>
+      <p><strong>Role:</strong> {{ userDetails.role }}</p>
+    </div>
+    <div class="card-body text-danger" *ngIf="!userDetails">
+      <p>Loading user details...</p>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="userDetails?.manager">
+    <div class="card-header text-white" style="background-color: #673ab7;">
+      Manager Details
+    </div>
+    <div class="card-body">
+      <p><strong>Username:</strong> {{ userDetails.manager.username }}</p>
+      <p><strong>Email:</strong> {{ userDetails.manager.email }}</p>
+      <p><strong>Role:</strong> {{ userDetails.manager.role }}</p>
+    </div>
+  </div>
+</div>
