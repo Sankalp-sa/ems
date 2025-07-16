@@ -8,14 +8,28 @@ import { MyLeavesComponent } from './my-leaves/my-leaves.component';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { LeaveComponent } from './leave/leave.component';
 import { ManagerLeavesComponent } from './manager-leaves/manager-leaves.component';
+import { RoleGuard } from './guards/role.guard';
 
 const routes: Routes = [
-  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard]},
+  { path: 'register', component: RegisterComponent, canActivate: [NoAuthGuard] },
   { path: 'login', component: AuthComponent, canActivate: [NoAuthGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'myleaves', component: MyLeavesComponent, canActivate: [AuthGuard] },
-  { path: 'applyLeave', component: LeaveComponent, canActivate: [AuthGuard]  },
-  { path: 'managerLeaves', component: ManagerLeavesComponent, canActivate: [AuthGuard] },
+  {
+    path: 'dashboard', component: DashboardComponent,
+    canActivate: [RoleGuard],
+    data: { roles: ['admin', 'manager', 'user'] }
+  },
+  {
+    path: 'myleaves', component: MyLeavesComponent, canActivate: [RoleGuard],
+    data: { roles: ['admin', 'user'] }
+  },
+  {
+    path: 'applyLeave', component: LeaveComponent, canActivate: [RoleGuard],
+    data: { roles: ['admin', 'user'] }
+  },
+  {
+    path: 'managerLeaves', component: ManagerLeavesComponent, canActivate: [RoleGuard],
+    data: { roles: ['admin', 'manager'] }
+  },
 ];
 
 @NgModule({
