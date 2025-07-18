@@ -31,6 +31,8 @@ import { MyLeavesComponent } from './my-leaves/my-leaves.component';
 import { MatCardModule } from '@angular/material/card';
 import { EditLeaveComponent } from './edit-leave/edit-leave.component';
 import { ManagerLeavesComponent } from './manager-leaves/manager-leaves.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatMenuModule} from '@angular/material/menu';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -66,9 +68,9 @@ function initFactory(initService: InitService) {
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    
-    
     MatCardModule,
+    MatSnackBarModule,
+    MatMenuModule
   ],
   providers: [
     {

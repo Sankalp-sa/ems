@@ -6,10 +6,13 @@ import { RolesGuard } from './guards/role.guard';
 import { Roles } from './decorators/roles.decorator';
 import { Role } from './enums/role.enum';
 import { Request, Response } from 'express';
+import { SocketGateway } from 'src/web-socket-gateway/web-socket-gateway';
+import { ConnectedSocket } from '@nestjs/websockets';
+import { Socket } from 'socket.io';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService, private SocketService: SocketGateway) {}
 
   @Post('login')
   @UseGuards(LocalGuard)
