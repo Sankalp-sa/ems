@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormBuilder,Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EditLeaveService } from './edit-leave.service';
+import { CustomValidators } from '../leave/validators/leave.validations'
 
 @Component({
   selector: 'app-edit-leave',
@@ -23,7 +24,8 @@ export class EditLeaveComponent implements OnInit {
         startDate: ['',Validators.required],
         endDate: ['',Validators.required],
         reason: ['',Validators.required]
-      }
+      },
+      {validators : CustomValidators.dateRangeValidator}
 
     )
 
