@@ -17,6 +17,26 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
+
+      <!-- Bell icon with badge -->
+  <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+    <mat-icon>notifications</mat-icon>
+    <span class="mat-badge" *ngIf="unreadCount > 0" matBadge="{{ unreadCount }}" matBadgeColor="warn"></span>
+  </button>
+
+  <!-- Dropdown menu for notifications -->
+  <mat-menu #notificationMenu="matMenu">
+    <ng-container *ngIf="notifications.length > 0; else noNotifications">
+      <button mat-menu-item *ngFor="let notif of notifications">
+        <mat-icon>info</mat-icon>
+        <span>{{ notif.message }}</span>
+      </button>
+    </ng-container>
+    <ng-template #noNotifications>
+      <button mat-menu-item disabled>No new notifications</button>
+    </ng-template>
+  </mat-menu>
+
       <button
         type="button"
         aria-label="Toggle sidenav"

@@ -18,17 +18,16 @@ export class RoleGuard implements CanActivate {
 
     if (!this.authService.isLoggedIn) {
       // Not logged in - redirect to login
-      return of(this.router.createUrlTree(['/login']));
+      return this.router.createUrlTree(['/login']);
     }
 
     if (this.authService.hasAnyRole(allowedRoles)) {
       // Role is allowed
-      return of(true);
+      return true;
     }
 
     // Role not allowed - redirect to unauthorized page or dashboard
-    return of(this.router.createUrlTree(['/dashboard']));
-
+    return this.router.createUrlTree(['/dashboard']);
 
   }
 

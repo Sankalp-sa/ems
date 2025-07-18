@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import { User } from './auth.user.interface';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-auth',
@@ -13,7 +14,7 @@ export class AuthComponent implements OnInit {
 
   loginForm !: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router, private socketService: SocketService) { }
 
   ngOnInit(): void {
 
@@ -23,7 +24,7 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  login(){
+  login() {
     if (this.loginForm.valid) {
       const { userName, password } = this.loginForm.value;
       this.authService.login(userName, password).subscribe({
@@ -34,6 +35,14 @@ export class AuthComponent implements OnInit {
               console.log('User details fetched successfully', userDetails);
               this.authService.isLoggedIn = true; // Set login status
               this.authService.userDetails = userDetails as User; // Assuming User is a defined interface for user details
+
+              this.socketService.joinUserRoom(this.authService.userDetails.id);
+
+              this.socketService.onLeaveStatusUpdate((data) => {
+                console.log('Leave status updated:', data);
+                // You can show a toast notification or refresh UI here
+              });
+
               this.route.navigate(['/dashboard']); // Navigate to dashboard or home page
             },
             error: (error) => {

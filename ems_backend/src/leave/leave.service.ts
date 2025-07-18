@@ -5,12 +5,14 @@ import {Model} from 'mongoose'
 import { CreateLeaveDto } from './dto/create-leave.dto';
 import { UpdateLeaveDto } from './dto/update-leave.dto';
 import { InjectModel } from '@nestjs/mongoose';
+import { SocketGateway } from 'src/web-socket-gateway/web-socket-gateway';
 
 @Injectable()
 export class LeaveService {
 
   constructor(@InjectModel(Leave.name) private leaveModel: Model<Leave>,
-              @InjectModel(User.name) private userModel: Model<User>){}
+              @InjectModel(User.name) private userModel: Model<User>,
+              private SocketGateway: SocketGateway){}
 
   async createLeave(createLeaveDto: CreateLeaveDto, userId: string) {
      const createdLeave = new this.leaveModel(
@@ -43,7 +45,19 @@ export class LeaveService {
    async updateLeaveStatus(leaveId: string, status: 'approved' | 'rejected') {
     
     const leave = await this.leaveModel.findByIdAndUpdate(leaveId, { status: status });
-    return leave.save();
+    await leave.save();
+
+    this.SocketGateway.sendLeaveStatusUpdate(
+      leave.userId.toString(),
+      {
+        leaveId,
+        status,
+        message: `Your leave was ${status}`,
+      }
+    );
+
+    return leave;
+
   }
 
   async getEmployeeLeaves(managerId: string)
