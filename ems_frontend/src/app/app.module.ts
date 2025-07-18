@@ -33,6 +33,7 @@ import { EditLeaveComponent } from './edit-leave/edit-leave.component';
 import { ManagerLeavesComponent } from './manager-leaves/manager-leaves.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatMenuModule} from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -70,7 +71,8 @@ function initFactory(initService: InitService) {
     MatNativeDateModule,
     MatCardModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatBadgeModule
   ],
   providers: [
     {

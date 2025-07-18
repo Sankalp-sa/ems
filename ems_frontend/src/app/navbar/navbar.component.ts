@@ -5,6 +5,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 import { SocketService } from '../services/socket.service';
+import { NotificationsService } from '../services/notifications.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,8 +14,8 @@ import { SocketService } from '../services/socket.service';
 })
 export class NavbarComponent implements OnInit {
 
-  notifications: { message: string }[] = [];
-  unreadCount = 0;
+  notifications: { message: string , read:boolean}[] = [];
+  unreadCount :number = 0;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -25,15 +26,52 @@ export class NavbarComponent implements OnInit {
   constructor(private breakpointObserver: BreakpointObserver,
     private authService: AuthService,
     private route: Router,
-    private socketService: SocketService) { }
+    private socketService: SocketService,
+    private  notificationService: NotificationsService) { }
 
   ngOnInit(): void {
-    this.socketService.onLeaveStatusUpdate((data: { message: string }) => {
-      this.notifications.unshift(data);
-      this.unreadCount++;
-    });
 
+    this.notifications = this.notificationService.notifications;
+    
+    this.notificationService.unreadCount = this.notifications.filter(n => !n.read).length;
+
+    
+    this.socketService.onLeaveStatusUpdate((data: { message: string }) => {
+      //this.notifications.unshift(data);
+      this.notificationService.unreadCount++;
+      
+      this.notificationService.addNotification(data.message);
+
+      
+      this.notifications = this.notificationService.notifications;
+      
+      
+    });
+    
+
+    this.unreadCount = this.notificationService.unreadCount;
+    
   }
+
+
+  // getUnreadCount()
+  // {
+  //   return this.notificationService.unreadCount;
+  // }
+
+  // getNotifications()
+  // {
+  //   console.log(this.notificationService.notifications)
+  //   return this.notificationService.notifications;
+    
+  // }
+
+  handleNotificationClick(notification: { message: string, read: boolean }) {
+  this.notificationService.onNotificationClick(notification);
+  this.notifications = this.notifications.filter(n => n !== notification);
+  this.unreadCount = this.notificationService.unreadCount;
+    }
+
 
   isLoggedIn(): boolean {
     return this.authService.isLoggedIn;

@@ -19,15 +19,14 @@
     <mat-toolbar color="primary">
 
       <!-- Bell icon with badge -->
-  <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+  <button mat-icon-button [matMenuTriggerFor]="notificationMenu"  [matBadge]="unreadCount" matBadgeColor="warn"  >
     <mat-icon>notifications</mat-icon>
-    <span class="mat-badge" *ngIf="unreadCount > 0" matBadge="{{ unreadCount }}" matBadgeColor="warn"></span>
   </button>
 
   <!-- Dropdown menu for notifications -->
   <mat-menu #notificationMenu="matMenu">
     <ng-container *ngIf="notifications.length > 0; else noNotifications">
-      <button mat-menu-item *ngFor="let notif of notifications">
+      <button mat-menu-item *ngFor="let notif of notifications" (click)="handleNotificationClick(notif)"   [class.unread]="!notif.read">
         <mat-icon>info</mat-icon>
         <span>{{ notif.message }}</span>
       </button>
