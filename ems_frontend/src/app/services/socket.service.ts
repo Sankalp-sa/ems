@@ -16,6 +16,15 @@ export class SocketService {
     this.socket.emit('join', userId);
   }
 
+  leaveUserRoom(userId: string){
+    this.socket.emit('leave', userId);
+  }
+
+  dissconnect(){
+    this.socket.disconnect();
+  }
+
+
   // Optional: Listen for updates
   onLeaveStatusUpdate(callback: (data: any) => void) {
     this.socket.on('leaveStatusUpdated', callback);

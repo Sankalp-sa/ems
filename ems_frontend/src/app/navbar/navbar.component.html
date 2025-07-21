@@ -19,13 +19,13 @@
     <mat-toolbar color="primary">
 
       <!-- Bell icon with badge -->
-  <button mat-icon-button [matMenuTriggerFor]="notificationMenu"  [matBadge]="unreadCount" matBadgeColor="warn"  >
+  <button *ngIf="isLoggedIn()" mat-icon-button [matMenuTriggerFor]="notificationMenu"  [matBadge]="unreadCount" matBadgeColor="warn" [matBadgeHidden]="unreadCount === 0">
     <mat-icon>notifications</mat-icon>
   </button>
 
   <!-- Dropdown menu for notifications -->
   <mat-menu #notificationMenu="matMenu">
-    <ng-container *ngIf="notifications.length > 0; else noNotifications">
+    <ng-container *ngIf="(notifications.length > 0); else noNotifications">
       <button mat-menu-item *ngFor="let notif of notifications" (click)="handleNotificationClick(notif)"   [class.unread]="!notif.read">
         <mat-icon>info</mat-icon>
         <span>{{ notif.message }}</span>
@@ -35,7 +35,6 @@
       <button mat-menu-item disabled>No new notifications</button>
     </ng-template>
   </mat-menu>
-
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -47,7 +46,6 @@
       <span>Employee </span>
       <button *ngIf="isLoggedIn()" mat-button (click)="logout()">Logout
       </button>
-
     </mat-toolbar>
     <router-outlet> </router-outlet>
   </mat-sidenav-content>

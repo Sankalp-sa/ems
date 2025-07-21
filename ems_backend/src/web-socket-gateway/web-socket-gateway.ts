@@ -25,7 +25,6 @@ export class SocketGateway implements OnGatewayConnection {
         // console.log("Status update in socket",userId, data);
         this.server.to(userId).emit('leaveStatusUpdated', data);
     }
-
     // Optionally, join user to a room based on their ID
     // handleJoin(client: any, userId: string) {
     //     client.join(userId);
@@ -36,4 +35,11 @@ export class SocketGateway implements OnGatewayConnection {
         client.join(userId);
         console.log(`User ${userId} joined their room`);
     }
+
+    @SubscribeMessage('leave')
+    handleLeaveRoom(@MessageBody() userId: string, @ConnectedSocket() client: Socket) {
+        client.leave(userId);
+        console.log(`User ${userId} left their room`);
+    }
+
 }

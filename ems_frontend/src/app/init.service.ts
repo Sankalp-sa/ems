@@ -19,6 +19,7 @@ export class InitService {
         this.authService.userDetails = userDetails as User; // Assuming User is a defined interface for user details
         this.authService.isLoggedIn = true; // Set login status
 
+        console.log("User joined room id ", this.authService.userDetails.id);
         this.socketService.joinUserRoom(this.authService.userDetails.id);
 
         this.socketService.onLeaveStatusUpdate((data) => {

@@ -39,12 +39,11 @@ export class NavbarComponent implements OnInit {
     this.socketService.onLeaveStatusUpdate((data: { message: string }) => {
       //this.notifications.unshift(data);
       this.notificationService.unreadCount++;
-      
       this.notificationService.addNotification(data.message);
 
       
       this.notifications = this.notificationService.notifications;
-      
+      this.unreadCount = this.notificationService.unreadCount;
       
     });
     
@@ -83,7 +82,8 @@ export class NavbarComponent implements OnInit {
         console.log('Logout successful', response);
         this.authService.isLoggedIn = false; // Reset login status
         this.authService.userDetails = null; // Clear user details
-
+        this.socketService.leaveUserRoom(this.authService.userDetails.id);
+        this.socketService.dissconnect();
         this.route.navigate(['/login']); // Navigate to login page after logout
       },
       error: (error) => {

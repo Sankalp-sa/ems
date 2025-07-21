@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { APP_SERVICE_CONFIG } from '../AppConfig/appconfig.service';
 import { AppConfig } from '../AppConfig/appconfig.interface';
 import { User } from './auth.user.interface';
+import { SocketService } from '../services/socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthService {
   userDetails!: User | null;
 
   constructor(@Inject(APP_SERVICE_CONFIG) private config: AppConfig,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private socketService: SocketService) {
     this.baseUrl = this.config.apiEndpoint; // Assuming apiEndpoint is defined in your config
   }
 
