@@ -59,6 +59,7 @@ export class LeaveController {
     @Body('status') status: 'approved' | 'rejected',)
   {
     const leaveId = req.body.leaveId;
+    
     console.log(leaveId)
     return await this.leaveService.updateLeaveStatus(leaveId, status)
   }

@@ -7,11 +7,13 @@ import { UpdateLeaveDto } from './dto/update-leave.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { SocketGateway } from 'src/web-socket-gateway/web-socket-gateway';
 
+
 @Injectable()
 export class LeaveService {
 
   constructor(@InjectModel(Leave.name) private leaveModel: Model<Leave>,
               @InjectModel(User.name) private userModel: Model<User>,
+              @InjectModel(Notification.name) private notificationModel: Model<Notification>,
               private SocketGateway: SocketGateway){}
 
   async createLeave(createLeaveDto: CreateLeaveDto, userId: string) {
@@ -46,6 +48,12 @@ export class LeaveService {
     
     const leave = await this.leaveModel.findByIdAndUpdate(leaveId, { status: status });
     await leave.save();
+    const targetUserId = leave.userId.toString()
+
+    await this.notificationModel.create({
+      userId: targetUserId,
+      message: `Your leave was ${status}`,
+    });
 
     this.SocketGateway.sendLeaveStatusUpdate(
       leave.userId.toString(),
@@ -77,4 +85,5 @@ export class LeaveService {
   }
 
 
-}
+}import { Notification } from 'src/schemas/Notifications.schema';
+
